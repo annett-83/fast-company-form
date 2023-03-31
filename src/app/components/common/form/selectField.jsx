@@ -10,20 +10,18 @@ const SelectField = ({
     error,
     name
 }) => {
-    const handeleChange = ({ target }) => {
+    const handleChange = ({ target }) => {
         onChange({ name: target.name, value: target.value });
     };
     const getInputClasses = () => {
         return "form-select" + (error ? " is-invalid" : "");
     };
 
-    const opionsArray =
+    const optionsArray =
         !Array.isArray(options) && typeof options === "object"
-            ? Object.keys(options).map((optionName) => ({
-                name: options[optionName].name,
-                value: options[optionName]._id
-            }))
+            ? Object.values(options)
             : options;
+
     return (
         <div className="mb-4">
             <label htmlFor={name} className="form-label">
@@ -34,15 +32,15 @@ const SelectField = ({
                 id={name}
                 name={name}
                 value={value}
-                onChange={handeleChange}
+                onChange={handleChange}
             >
                 <option disabled value="">
                     {defaultOption}
                 </option>
-                {opionsArray &&
-                    opionsArray.map((options) => (
-                        <option value={options.value} key={options.value}>
-                            {options.name}
+                {optionsArray.length > 0 &&
+                    optionsArray.map((option) => (
+                        <option value={option.value} key={option.value}>
+                            {option.label}
                         </option>
                     ))}
             </select>
@@ -50,13 +48,14 @@ const SelectField = ({
         </div>
     );
 };
+
 SelectField.propTypes = {
-    label: PropTypes.string,
     defaultOption: PropTypes.string,
+    label: PropTypes.string,
     value: PropTypes.string,
     onChange: PropTypes.func,
-    options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     error: PropTypes.string,
+    options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     name: PropTypes.string
 };
 

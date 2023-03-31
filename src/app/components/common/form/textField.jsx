@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 
 const TextField = ({ label, type, name, value, onChange, error }) => {
     const [showPassword, setShowPassword] = useState(false);
-    const handeleChange = ({ target }) => {
+
+    const handleChange = ({ target }) => {
         onChange({ name: target.name, value: target.value });
     };
     const getInputClasses = () => {
@@ -21,7 +22,7 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
                     id={name}
                     name={name}
                     value={value}
-                    onChange={handeleChange}
+                    onChange={handleChange}
                     className={getInputClasses()}
                 />
                 {type === "password" && (
@@ -42,15 +43,15 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
         </div>
     );
 };
-TextField.defultProps = {
-    types: "text"
+TextField.defaultProps = {
+    type: "text"
 };
 TextField.propTypes = {
     label: PropTypes.string,
     type: PropTypes.string,
+    name: PropTypes.string,
     value: PropTypes.string,
     onChange: PropTypes.func,
-    name: PropTypes.string,
     error: PropTypes.string
 };
 

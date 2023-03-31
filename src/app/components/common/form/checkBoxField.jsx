@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const CheckBoxField = ({ name, value, onChange, children, error }) => {
-    const handeleChange = ({ target }) => {
+    const handleChange = () => {
         onChange({ name: name, value: !value });
     };
     const getInputClasses = () => {
@@ -15,7 +15,7 @@ const CheckBoxField = ({ name, value, onChange, children, error }) => {
                 type="checkbox"
                 value=""
                 id={name}
-                onChange={handeleChange}
+                onChange={handleChange}
                 checked={value}
             />
             <label className="form-check-label" htmlFor={name}>
@@ -26,10 +26,13 @@ const CheckBoxField = ({ name, value, onChange, children, error }) => {
     );
 };
 CheckBoxField.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     name: PropTypes.string,
-    onChange: PropTypes.func,
     value: PropTypes.bool,
+    onChange: PropTypes.func,
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node
+    ]),
     error: PropTypes.string
 };
 
