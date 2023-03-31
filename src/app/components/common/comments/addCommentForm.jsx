@@ -24,16 +24,14 @@ const AddCommentForm = ({ onSubmit }) => {
         },
         content: {
             isRequired: {
-                message:
-                    "Сообщение не может быть пустым"
+                message: "Сообщение не может быть пустым"
             }
         }
     };
     const validate = () => {
         const errors = validator(data, validatorConfig);
-
         setErrors(errors);
-        return Object.keys(errors).lenght === 0;
+        return (Object.keys(errors).length === 0);
     };
     useEffect(() => {
         API.users.fetchAll().then(setUsers);
@@ -45,17 +43,18 @@ const AddCommentForm = ({ onSubmit }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
+        console.log(isValid);
         if (!isValid) return;
         onSubmit(data);
         clearForm();
     };
     const arrayOfUsers =
-    users &&
-    Object.keys(users).map((userId) => ({
-        name: users[userId].name,
-        value: users[userId]._id
-    }));
-    console.log(arrayOfUsers);
+        users &&
+        Object.keys(users).map((userId) => ({
+            // name: users[userId].name,
+            label: users[userId].name,
+            value: users[userId]._id
+        }));
     return (
         <div>
             <h2>New comment</h2>
@@ -76,7 +75,9 @@ const AddCommentForm = ({ onSubmit }) => {
                     error={errors.content}
                 />
                 <div className="d-flex justify-content-end">
-                    <button className="btn btn-primary">Опубликовать</button>
+                    <button className="btn btn-primary" onClick={handleSubmit}>
+                        Опубликовать
+                    </button>
                 </div>
             </form>
         </div>
